@@ -1,2 +1,2 @@
-res://Scenes/LevelBase/LevelBase.tscn
-res://Scenes/Main/Main.tscn
+res://Scenes/Animal/Animal.tscn
+res://Scenes/Animal/Animal.gd
