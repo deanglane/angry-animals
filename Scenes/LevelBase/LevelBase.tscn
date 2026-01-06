@@ -12,4 +12,4 @@ texture = ExtResource("1_5ufo3")
 centered = false
 
 [node name="Animal" parent="." instance=ExtResource("2_bgw71")]
-position = Vector2(142, 322)
+position = Vector2(142, 487)
