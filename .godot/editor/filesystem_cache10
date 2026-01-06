@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1767533385
+::res://::1767608638
 icon.svg::CompressedTexture2D/CompressedTexture2D::357953175835045955::1765445640::1765446140::1::::<><><>0<>0<>517dd736119db57eac72d15470936d04<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 ::res://assets/::1765445640
 ::res://assets/audio/::1765446140
@@ -29,12 +29,14 @@ waterTop_high.png::CompressedTexture2D/CompressedTexture2D::196164449362684167::
 ::res://assets/ui/::1765446140
 panel_beige.png::CompressedTexture2D/CompressedTexture2D::802160822840860473::1765445640::1765446140::1::::<><><>0<>0<>b6c6f6a5a21b9fb25f8f9d0ef5015ce1<>res://.godot/imported/panel_beige.png-0c2561c71b5e775174913c731a813cc9.ctex::
 ::res://Scenes/::1767405409
-::res://Scenes/Animal/::1767451032
-Animal.gd::GDScript::5722574359526077036::1767451032::0::1::::Animal<>RigidBody2D<><>0<>0<><>::
-Animal.tscn::PackedScene::3941112365889281485::1767451032::0::1::::<><><>0<>0<><>::uid://b6rkpm24ese8::::res://assets/player/parrot.png<>uid://cnsb707h4jd4o::::res://Scenes/Animal/Animal.gd<>uid://edu8e4pgxcnb::::res://assets/audio/stretch2.ogg<>uid://d0dl5nb4b611t::::res://assets/audio/catapult.ogg<>uid://2a65n34xyfu::::res://assets/audio/kick_wood.ogg<>uid://c50w56386h7be::::res://assets/items/arrow.png
-::res://Scenes/LevelBase/::1767406519
-LevelBase.tscn::PackedScene::2197237698389502256::1767406519::0::1::::<><><>0<>0<><>::uid://bxb6rjenwxhd3::::res://assets/scene/colored_castle.png<>uid://bwfdsr4jlrmph::::res://Scenes/Animal/Animal.tscn
+::res://Scenes/Animal/::1767700461
+Animal.gd::GDScript::5722574359526077036::1767700461::0::1::::Animal<>RigidBody2D<><>0<>0<><>::
+Animal.tscn::PackedScene::3941112365889281485::1767699534::0::1::::<><><>0<>0<><>::uid://b6rkpm24ese8::::res://assets/player/parrot.png<>uid://cnsb707h4jd4o::::res://Scenes/Animal/Animal.gd<>uid://edu8e4pgxcnb::::res://assets/audio/stretch2.ogg<>uid://d0dl5nb4b611t::::res://assets/audio/catapult.ogg<>uid://2a65n34xyfu::::res://assets/audio/kick_wood.ogg<>uid://c50w56386h7be::::res://assets/items/arrow.png
+::res://Scenes/LevelBase/::1767735632
+LevelBase.tscn::PackedScene::2197237698389502256::1767735632::0::1::::<><><>0<>0<><>::uid://bxb6rjenwxhd3::::res://assets/scene/colored_castle.png<>uid://dmrcq82k0v8j2::::res://Scenes/LevelBase/LevelBase.gd
+LevelBase.gd::GDScript::8036774378711619721::1767735632::0::1::::<>Node2D<><>0<>0<><>::
 ::res://Scenes/Main/::1767354627
 Main.tscn::PackedScene::7178789745489484130::1767354627::0::1::::<><><>0<>0<><>::uid://ctkumy5gn7e84::::res://assets/env/MainBG.png
 ::res://Scenes/Test/::1767357832
 Test.tscn::PackedScene::6691059097550455540::1767357832::0::1::::<><><>0<>0<><>::uid://cfa1h20cd4g6k::::res://assets/env/elementStone025.png<>uid://fdno3ur41bwt::::res://icon.svg<>uid://f3m0cmaucarq::::res://assets/env/elementWood015.png
+::res://SignalHub/::0

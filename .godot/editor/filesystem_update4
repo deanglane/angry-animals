@@ -1,3 +1,5 @@
 res://Scenes/Animal/Animal.tscn
 res://Scenes/Animal/Animal.gd
 res://Scenes/LevelBase/LevelBase.tscn
+res://Scenes/LevelBase/LevelBase.gd
+res://Globals/SignalHub.gd

@@ -16,6 +16,10 @@ run/main_scene="uid://6kmgis52vuu7"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalHub="*res://Globals/SignalHub.gd"
+
 [display]
 
 window/size/window_width_override=3456

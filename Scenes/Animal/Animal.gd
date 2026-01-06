@@ -55,6 +55,10 @@ func update_debug_label() -> void:
 	ds += "_dragged_vector %.1f, %.1f" % [_dragged_vector.x, _dragged_vector.y]
 	debug_label.text = ds
 
+func die() -> void:
+	SignalHub.emit_on_animal_died()
+	queue_free()
+	
 #endregion
 
 
@@ -64,13 +68,13 @@ func update_debug_label() -> void:
 # Handles the linear interpolation of the dragging and scalling effect of the arrow
 func update_arrow_scale() -> void:
 	var imp_len: float = calculate_impulse().length() # stores the length of the vector
-	print("imp_len ",imp_len)
+	#print("imp_len ",imp_len)
 	var perc: float = clamp(imp_len / IMPLUSE_MAX, 0.0, 1.0) # creates a percentage value which is the length / max impulse (1200)
-	print("perc ",perc)
+	#print("perc ",perc)
 	arrow.scale.x = lerp(_arrorw_scale_x, _arrorw_scale_x * 2, perc) # Changes the scale of on the x axis using lerp which sets a value between the 2 _arrorw_scale_x(0.3) & (0.6) values based on the percentage.
-	print("arrow.scale.x ",arrow.scale.x)
+	#print("arrow.scale.x ",arrow.scale.x)
 	arrow.rotation = (_start - position).angle()
-	print("arrow.rotation ",_start - position)
+	#print("arrow.rotation ",_start - position)
 
 # This will show the arrow sprite and set the gloabl mouse position to the _drag_start varibale.
 func start_dragging() -> void:
@@ -79,31 +83,31 @@ func start_dragging() -> void:
 
 func handle_dragging() -> void:
 	var new_drag_vector: Vector2 = get_global_mouse_position() - _drag_start # amount we have just dragged. Drag_start is the original mouse position.
-	print("Global mouse pos ", get_global_mouse_position())
-	print("_drag_start ",_drag_start )
-	print("new_drag_vector ",new_drag_vector)
+	#print("Global mouse pos ", get_global_mouse_position())
+	#print("_drag_start ",_drag_start )
+	#print("new_drag_vector ",new_drag_vector)
 	
 	# Clamping the new drag position vector to min and max values. Even though you can drag the mouse beyond this bounding box
 	# you can not go past -60,60
 	new_drag_vector = new_drag_vector.clamp(
 		DRAG_LIM_MIN, DRAG_LIM_MAX
 	)
-	print("new_drag_vector CLAMP ",new_drag_vector)
+	#print("new_drag_vector CLAMP ",new_drag_vector)
 	
 	var diff: Vector2 = new_drag_vector - _dragged_vector # this returns (0,0) since the new_drag_vector - _dragged_vector will be the same.
-	print("diff ", diff) # this seems to always be (0,0)
-	print("_dragged_vector ",_dragged_vector)
-	print("diff length ", diff.length())
+	#print("diff ", diff) # this seems to always be (0,0)
+	#print("_dragged_vector ",_dragged_vector)
+	#print("diff length ", diff.length())
 	# for a split second the diff.length is higher that 0 so the sound can play
 	if diff.length() > 0 and stretch_sound.playing == false:
 		stretch_sound.play() # plays the sound of stretching when the length is higher than 0
 		
 	_dragged_vector = new_drag_vector
-	print("_dragged_vector ",_dragged_vector)
+	#print("_dragged_vector ",_dragged_vector)
 	
-	print("START", _start) # original click global position
+	#print("START", _start) # original click global position
 	position = _start + _dragged_vector # update the animal's position every frame so it looks like it is moving with the mouse cursor
-	print("position ",position)
+	#print("position ",position)
 	
 	update_arrow_scale() # evokes the stretching and scalling of the arrow
 
@@ -157,7 +161,8 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	pass # Replace with function body.
+	print("Animal is off screen")
+	die()
 
 
 func _on_sleeping_state_changed() -> void:
