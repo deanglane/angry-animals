@@ -5,6 +5,10 @@ class_name Animal
 # enum constanats States
 enum AnimalState { Ready, Drag, Release }
 
+const DRAG_LIM_MAX: Vector2 = Vector2(0, 60) # Bottom right
+const DRAG_LIM_MIN: Vector2 = Vector2(-60, 0)
+
+
 @onready var arrow: Sprite2D = $Arrow
 @onready var debug_label: Label = $DebugLabel
 @onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
@@ -17,6 +21,10 @@ var _drag_start: Vector2 = Vector2.ZERO # Drag from start position
 var _dragged_vector: Vector2 = Vector2.ZERO #
 var _arrorw_scale_x: float = 0.0 # scale from the start of the arrow
 
+func _unhandled_input(event: InputEvent) -> void:
+	if _state == AnimalState.Drag and event.is_action_released("drag"):
+		change_state(AnimalState.Release)
+		
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,13 +33,17 @@ func _ready() -> void:
 func setup() -> void:
 	_arrorw_scale_x = arrow.scale.x
 	print("_arrorw_scale_x ",_arrorw_scale_x)
-	arrow.hide()
+	arrow.hide() # hides the arrow sprte when the game starts
 	_start = position
 	print("_start ",_start)
 
 
 func _physics_process(delta: float) -> void:
+	update_state()
 	update_debug_label()
+
+# MISCELLANEOUS FUNCTIONS
+#region misc
 
 func update_debug_label() -> void:
 	var ds: String = "ST:%s SL:%s FR:%s\n" % [
@@ -41,8 +53,88 @@ func update_debug_label() -> void:
 	ds += "_dragged_vector %.1f, %.1f" % [_dragged_vector.x, _dragged_vector.y]
 	debug_label.text = ds
 
+#endregion
+
+
+# DRAGGING FUNCTIONS
+#region drag
+
+# This will show the arrow sprite and set the gloabl mouse position to the _drag_start varibale.
+func start_dragging() -> void:
+	arrow.show() # Shows / unhides the arrow sprite when the mouse click is detected and the current state is set to Ready
+	_drag_start = get_global_mouse_position() # stores the gloabal mouse position to to _drag_start
+
+func handle_dragging() -> void:
+	var new_drag_vector: Vector2 = get_global_mouse_position() - _drag_start # amount we have just dragged. Drag_start is the original mouse position.
+	print("Global mouse pos ", get_global_mouse_position())
+	print("_drag_start ",_drag_start )
+	print("new_drag_vector ",new_drag_vector)
+	
+	# Clamping the new drag position vector to min and max values. Even though you can drag the mouse beyond this bounding box
+	# you can not go past -60,60
+	new_drag_vector = new_drag_vector.clamp(
+		DRAG_LIM_MIN, DRAG_LIM_MAX
+	)
+	print("new_drag_vector CLAMP ",new_drag_vector)
+	
+	var diff: Vector2 = new_drag_vector - _dragged_vector # this returns (0,0) since the new_drag_vector - _dragged_vector will be the same.
+	print("diff ", diff) # this seems to always be (0,0)
+	print("_dragged_vector ",_dragged_vector)
+	print("diff length ", diff.length())
+	# for a split second the diff.length is higher that 0 so the sound can play
+	if diff.length() > 0 and stretch_sound.playing == false:
+		stretch_sound.play() # plays the sound of stretching when the length is higher than 0
+		
+	_dragged_vector = new_drag_vector
+	print("_dragged_vector ",_dragged_vector)
+	
+	print("START", _start) # original click global position
+	position = _start + _dragged_vector # update the animal's position every frame so it looks like it is moving with the mouse cursor
+	print("position ",position)
+
+#endregion
+
+#region release
+
+# what to do when the click has been released.
+func start_release() -> void:
+	arrow.hide() # hides the srrow upon release of the mouse click
+	launch_sound.play() # plays the launch sound fx 
+	freeze = false # unfreezes the ridgidBody2d sprite
+	
+
+#endregion
+
+# STATE CHANGES
+#region state
+
+func update_state() -> void:
+	match _state:
+		AnimalState.Drag: # if the currect state is Drag the evoke this functions
+			handle_dragging()
+
+func change_state(new_state: AnimalState) -> void:
+	if _state == new_state: # checks to see if we are in the smae state then dont do anything. We dont want to accidentally change into the same state again.
+		return
+	
+	# Changes the current state to the new_state. Allows us to do other other things in different states
+	_state = new_state # Our current state is changed to the new_state "Drag" passed in when we evoked the function
+	
+	# match statement (Switch) is another way to switch states (Handling multiple possibilities). It avoids deep if nesting
+	# This switch statement evokes methods if the current state matches any of these conditions
+	match _state:
+		AnimalState.Drag: # if the currect state is Drag the evoke this functions
+			start_dragging() # function to evoke that starts the dragging. This will show the arrow sprite and set the gloabl mouse position to the _drag_start varibale.
+		AnimalState.Release: # 
+			start_release()
+#endregion
+
+# ALL SIGNAL FUNCTIONS
+#region signals
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	pass # Replace with function body.
+	# Check to see if the mouse buttong has been clicked and the currect state is set to Ready.
+	if event.is_action_pressed("drag") and _state == AnimalState.Ready:
+		change_state(AnimalState.Drag) # Changes the currect state to Drag. We pass the state Drag to the function
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -55,3 +147,5 @@ func _on_sleeping_state_changed() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	pass # Replace with function body.
+
+#endregion
