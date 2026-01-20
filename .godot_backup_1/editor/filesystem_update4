@@ -1,0 +1,12 @@
+res://Scenes/Main/Main.tscn
+res://Resources/white_32_font.tres
+res://Scenes/Button/LevelButton.gd
+res://Scenes/Button/LevelButton.tscn
+res://Scenes/GameUi/GameUi.tscn
+res://Resources/light_48_font.tres
+res://Scenes/LevelBase/LevelBase.tscn
+res://Scenes/GameUi/GameUi.gd
+res://Scenes/Animal/Animal.gd
+res://Scenes/LevelBase/LevelBase.gd
+res://Scenes/Cup/Cup.gd
+res://Globals/SignalHub.gd

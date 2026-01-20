@@ -38,6 +38,7 @@ offset = Vector2(150, 0)
 shape = SubResource("CircleShape2D_vqphk")
 
 [node name="DebugLabel" type="Label" parent="."]
+visible = false
 offset_left = -17.0
 offset_top = -80.0
 offset_right = 272.0

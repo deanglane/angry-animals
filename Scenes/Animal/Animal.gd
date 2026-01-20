@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 class_name Animal
+const CUP: PackedScene = preload("res://Scenes/Cup/Cup.tscn")
 
 # enum constanats States
 enum AnimalState { Ready, Drag, Release }
@@ -34,10 +35,10 @@ func _ready() -> void:
 
 func setup() -> void:
 	_arrorw_scale_x = arrow.scale.x # Stores the scale.x of the arrow for strecthing later
-	print("_arrorw_scale_x ",_arrorw_scale_x)
+	#print("_arrorw_scale_x ",_arrorw_scale_x)
 	arrow.hide() # hides the arrow sprte when the game starts
 	_start = position # stores the initial position of the animal sprite
-	print("_start (initial starting point) ",_start)
+	#print("_start (initial starting point) ",_start)
 
 
 func _physics_process(_delta: float) -> void:
@@ -125,6 +126,7 @@ func start_release() -> void:
 	launch_sound.play() # plays the launch sound fx 
 	freeze = false # unfreezes the ridgidBody2d sprite
 	apply_central_impulse(calculate_impulse())
+	SignalHub.emit_on_attempt_made() # Connects to the SignalHub and emits the signal for tracking attempts made
 
 #endregion
 
@@ -155,7 +157,7 @@ func change_state(new_state: AnimalState) -> void:
 # ALL SIGNAL FUNCTIONS
 #region signals
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	# Check to see if the mouse buttong has been clicked and the currect state is set to Ready.
+	# Check to see if the mouse button has been clicked and the currect state is set to Ready.
 	if event.is_action_pressed("drag") and _state == AnimalState.Ready:
 		change_state(AnimalState.Drag) # Changes the currect state to Drag. We pass the state Drag to the function
 
@@ -163,13 +165,22 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	print("Animal is off screen")
 	die()
+	
 
-
+# Whenn the animal comes to rest when in the cup function
 func _on_sleeping_state_changed() -> void:
-	pass # Replace with function body.
+	if sleeping == true: # checks if the sleeping state is true / Animal has finished rolling around
+		for body in get_colliding_bodies(): # Loop over all touching bodies (body is a temporary variable)
+			if body is Cup: # Type check to validate if the Body == Cup.
+				body.die() # this is th eanimal Die function not the cup dele
+		call_deferred("die") # call_deferred() schedules die() to run after the current frame / physics step completes.
+		
+		
+	
 
-
-func _on_body_entered(_body: Node) -> void:
-	pass # Replace with function body.
+func _on_body_entered(body: Node) -> void:
+	#print("body", body) # Body = Cup
+	if body is Cup and kick_sound.playing == false:
+		kick_sound.play()
 
 #endregion

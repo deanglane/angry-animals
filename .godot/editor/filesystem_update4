@@ -1,5 +1,10 @@
-res://Scenes/Animal/Animal.tscn
-res://Scenes/Animal/Animal.gd
-res://Scenes/LevelBase/LevelBase.tscn
+res://Scenes/Button/LevelButton.tscn
+res://Scenes/Main/Main.tscn
+res://Scenes/Button/LevelButton.gd
 res://Scenes/LevelBase/LevelBase.gd
-res://Globals/SignalHub.gd
+res://Scenes/Cup/Cup.gd
+res://Scenes/GameUi/GameUi.tscn
+res://Globals/ScoreManager.gd
+res://Scenes/GameUi/GameUi.gd
+res://Classes/LevelScoresResource.gd
+res://Scenes/Animal/Animal.tscn

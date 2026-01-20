@@ -1,0 +1,7 @@
+res://Scenes/GameUi/GameUi.tscn
+res://Resources/white_32_font.tres
+res://Scenes/Button/LevelButton.tscn
+res://Scenes/GameUi/GameUi.gd
+res://Scenes/Main/Main.tscn
+res://Scenes/Main/Main.gd
+res://Scenes/LevelBase/LevelBase.tscn

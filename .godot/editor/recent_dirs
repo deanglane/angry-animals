@@ -1,5 +1,3 @@
 res://Globals
-res://Scenes/Animal
-res://Scenes/Test
-res://Scenes/Main
-res://Scenes/LevelBase
+res://Scenes/Button
+res://Resources
